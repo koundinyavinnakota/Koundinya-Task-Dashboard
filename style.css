@@ -1,0 +1,584 @@
+/* ============================================================
+   Koundinya Task Dashboard – style.css
+   Dark-mode-first, glassmorphism, minimal, Apple-like feel
+   ============================================================ */
+
+/* ── CSS Custom Properties (design tokens) ── */
+:root {
+  /* Base palette – dark mode */
+  --bg:            #0d0d0f;
+  --surface:       rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(255, 255, 255, 0.08);
+  --border:        rgba(255, 255, 255, 0.10);
+  --text:          #e8e8f0;
+  --text-muted:    rgba(232, 232, 240, 0.50);
+  --radius:        16px;
+  --radius-sm:     10px;
+  --shadow:        0 8px 32px rgba(0, 0, 0, 0.45);
+  --transition:    0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Quadrant accent colours */
+  --delegate-from: #f59e0b;   /* amber */
+  --delegate-to:   #d97706;
+  --donow-from:    #ef4444;   /* red */
+  --donow-to:      #f97316;
+  --delete-from:   #6b7280;   /* neutral */
+  --delete-to:     #374151;
+  --schedule-from: #6366f1;   /* indigo/purple */
+  --schedule-to:   #3b82f6;
+}
+
+/* ── Light mode overrides ── */
+[data-theme="light"] {
+  --bg:            #f0f2f8;
+  --surface:       rgba(255, 255, 255, 0.75);
+  --surface-hover: rgba(255, 255, 255, 0.92);
+  --border:        rgba(0, 0, 0, 0.08);
+  --text:          #111118;
+  --text-muted:    rgba(17, 17, 24, 0.50);
+  --shadow:        0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Reset / Box model ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+  transition: background var(--transition), color var(--transition);
+  /* subtle animated radial background glow */
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(99, 102, 241, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 110%, rgba(239, 68, 68, 0.12) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(13, 13, 15, 0.75);
+  border-bottom: 1px solid var(--border);
+  padding: 0 clamp(16px, 4vw, 48px);
+}
+
+[data-theme="light"] .header {
+  background: rgba(240, 242, 248, 0.82);
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Brand */
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.brand-icon { font-size: 1.4rem; }
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  background: linear-gradient(135deg, #e8e8f0 0%, #9ca3af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Quote */
+.quote-box {
+  flex: 1;
+  text-align: center;
+}
+.quote-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+.theme-toggle:hover { transform: rotate(20deg) scale(1.1); }
+
+/* ============================================================
+   MATRIX GRID
+   ============================================================ */
+.matrix-grid {
+  max-width: 1400px;
+  margin: 28px auto;
+  padding: 0 clamp(12px, 3vw, 40px) 60px;
+  display: grid;
+  /* 2 columns, equal width */
+  grid-template-columns: 1fr 1fr;
+  /* 2 rows, min height but grow */
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+
+/* ============================================================
+   RESPONSIVE — Tablet (≤ 900px)
+   ============================================================ */
+@media (max-width: 900px) {
+  .quote-box { display: none; } /* hide quote on smaller screens to save space */
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile (≤ 720px)
+   ============================================================ */
+@media (max-width: 720px) {
+
+  /* Stack grid to single column */
+  .matrix-grid {
+    grid-template-columns: 1fr;
+    margin: 16px auto;
+    padding: 0 12px 40px;
+    gap: 14px;
+  }
+
+  /* Shrink header height */
+  .header-inner {
+    height: 52px;
+    gap: 12px;
+  }
+
+  .brand-title { font-size: 1rem; }
+  .brand-icon  { font-size: 1.1rem; }
+
+  /* Theme toggle easier to tap */
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  /* Quadrant padding tighter */
+  .quadrant {
+    padding: 16px 14px;
+    min-height: 200px;
+  }
+
+  .quadrant-title { font-size: 1rem; }
+
+  /* Tags wrap gracefully */
+  .quadrant-labels { gap: 4px; }
+  .tag { font-size: 0.58rem; padding: 2px 6px; }
+
+  /* Task cards — bigger tap area */
+  .task-card { padding: 14px 16px; }
+  .task-title { font-size: 0.92rem; }
+  .task-notes { font-size: 0.80rem; }
+
+  /* Delete button always visible on mobile (no hover) */
+  .task-card .delete-btn {
+    opacity: 1;
+    top: 10px;
+    right: 10px;
+    font-size: 0.9rem;
+    padding: 4px 6px;
+  }
+
+  /* Add task button bigger hit area */
+  .btn-add { padding: 12px 0; font-size: 0.88rem; }
+
+  /* Modal full-width on mobile */
+  .modal {
+    padding: 24px 18px 20px;
+    border-radius: 16px;
+    max-width: 100%;
+  }
+
+  .modal-title { font-size: 1rem; }
+
+  .form-input,
+  .form-textarea {
+    font-size: 1rem; /* prevents iOS zoom on focus */
+    padding: 12px;
+  }
+
+  .btn-save {
+    padding: 14px;
+    font-size: 1rem;
+  }
+}
+
+/* ============================================================
+   QUADRANT CARD (glassmorphism)
+   ============================================================ */
+.quadrant {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  transition: box-shadow var(--transition), border-color var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Coloured top-border accent */
+.quadrant::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.q-delegate::before { background: linear-gradient(90deg, var(--delegate-from), var(--delegate-to)); }
+.q-donow::before    { background: linear-gradient(90deg, var(--donow-from),    var(--donow-to));    }
+.q-delete::before   { background: linear-gradient(90deg, var(--delete-from),   var(--delete-to));   }
+.q-schedule::before { background: linear-gradient(90deg, var(--schedule-from), var(--schedule-to)); }
+
+/* Drag-over highlight */
+.quadrant.drag-over {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15), var(--shadow);
+  background: var(--surface-hover);
+}
+
+/* ── Quadrant header ── */
+.quadrant-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+.quadrant-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+}
+
+/* Pills */
+.tag {
+  font-size: 0.60rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+.tag-primary  { background: rgba(255,255,255,0.18); color: var(--text); }
+.tag-secondary{ background: rgba(255,255,255,0.08); color: var(--text-muted); }
+
+.quadrant-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  flex-shrink: 0;
+}
+
+/* Task counter badge */
+.task-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.12);
+  padding: 0 6px;
+  flex-shrink: 0;
+}
+
+/* Colour the counter per quadrant */
+.q-delegate .task-count { background: rgba(245, 158, 11, 0.25); color: var(--delegate-from); }
+.q-donow    .task-count { background: rgba(239, 68,  68, 0.25); color: var(--donow-from);    }
+.q-delete   .task-count { background: rgba(107, 114, 128,0.25); color: #9ca3af;               }
+.q-schedule .task-count { background: rgba(99, 102, 241, 0.25); color: var(--schedule-from); }
+
+/* ============================================================
+   TASK LIST + TASK CARDS
+   ============================================================ */
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;  /* fill quadrant height */
+}
+
+/* Individual task card */
+.task-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  cursor: grab;
+  transition: transform var(--transition), box-shadow var(--transition),
+              background var(--transition), opacity var(--transition);
+  position: relative;
+  animation: taskIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Entrance animation */
+@keyframes taskIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+.task-card:hover {
+  background: rgba(255,255,255,0.10);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.30);
+}
+
+/* While dragging */
+.task-card.dragging {
+  opacity: 0.45;
+  cursor: grabbing;
+  transform: scale(0.97);
+}
+
+/* Delete button (visible on hover) */
+.task-card .delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition), color var(--transition);
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.task-card:hover .delete-btn { opacity: 1; }
+.task-card .delete-btn:hover { color: #ef4444; background: rgba(239,68,68,0.12); }
+
+.task-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding-right: 20px; /* avoid overlap with delete btn */
+  word-break: break-word;
+}
+
+.task-notes {
+  font-size: 0.77rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+  word-break: break-word;
+}
+
+.task-time {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   ADD TASK BUTTON
+   ============================================================ */
+.add-task-area {
+  margin-top: 14px;
+}
+
+.btn-add {
+  width: 100%;
+  padding: 9px 0;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: border-color var(--transition), color var(--transition),
+              background var(--transition), transform var(--transition);
+}
+.btn-add:hover {
+  border-color: rgba(255,255,255,0.30);
+  color: var(--text);
+  background: rgba(255,255,255,0.04);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.60);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: #1a1a22;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 28px 24px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.60);
+  position: relative;
+  transform: translateY(16px) scale(0.97);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="light"] .modal { background: #ffffff; }
+
+.modal-backdrop.open .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: var(--text-muted);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+.modal-close:hover { background: rgba(239,68,68,0.20); color: #ef4444; }
+
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.required { color: #ef4444; }
+.optional  { font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+[data-theme="light"] .form-input,
+[data-theme="light"] .form-textarea {
+  background: rgba(0,0,0,0.04);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: rgba(99, 102, 241, 0.70);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.btn-save {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+  margin-top: 4px;
+}
+.btn-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.40);
+}
+.btn-save:active { transform: scale(0.98); }
+
+/* ============================================================
+   SCROLLBAR (WebKit)
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+::selection { background: rgba(99, 102, 241, 0.35); }
+
+/* ============================================================
+   UTILITY – Empty state message
+   ============================================================ */
+.empty-msg {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px 0 10px;
+  pointer-events: none;
+  user-select: none;
+}
