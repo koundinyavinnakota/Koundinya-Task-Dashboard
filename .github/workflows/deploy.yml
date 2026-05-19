@@ -1,0 +1,60 @@
+# ============================================================
+# Koundinya Task Dashboard — GitHub Pages Deploy Workflow
+# Triggered on every push to the main branch.
+# Deploys the static files (index.html, style.css, script.js)
+# directly to GitHub Pages — no build step needed.
+# ============================================================
+
+name: Deploy to GitHub Pages
+
+on:
+  # Run whenever code is pushed to main
+  push:
+    branches:
+      - main
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+# Grant the workflow permission to write to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only allow one deployment at a time; cancel any in-progress run
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy Static Site
+    runs-on: ubuntu-latest
+
+    # Tell GitHub Actions this job deploys to Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Configure GitHub Pages
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # 3. Upload the entire repo root as the Pages artifact
+      #    (index.html, style.css, script.js, README.md)
+      - name: Upload static files as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload from repo root — all 3 files are here
+          path: "."
+
+      # 4. Deploy the uploaded artifact to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
