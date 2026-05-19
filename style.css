@@ -246,25 +246,48 @@ body {
   overflow: hidden;
 }
 
-/* Coloured top-border accent */
+/* ── Per-quadrant tinted background ── */
+.q-delegate {
+  background: linear-gradient(145deg, rgba(245,158,11,0.18) 0%, rgba(217,119,6,0.10) 100%);
+  border-color: rgba(245,158,11,0.30);
+}
+.q-donow {
+  background: linear-gradient(145deg, rgba(239,68,68,0.20) 0%, rgba(249,115,22,0.12) 100%);
+  border-color: rgba(239,68,68,0.30);
+}
+.q-delete {
+  background: linear-gradient(145deg, rgba(107,114,128,0.20) 0%, rgba(55,65,81,0.12) 100%);
+  border-color: rgba(107,114,128,0.25);
+}
+.q-schedule {
+  background: linear-gradient(145deg, rgba(99,102,241,0.20) 0%, rgba(59,130,246,0.12) 100%);
+  border-color: rgba(99,102,241,0.30);
+}
+
+/* Thick coloured left border instead of top strip */
 .quadrant::before {
   content: '';
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 3px;
-  border-radius: var(--radius) var(--radius) 0 0;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: var(--radius) 0 0 var(--radius);
 }
+.q-delegate::before { background: linear-gradient(180deg, var(--delegate-from), var(--delegate-to)); }
+.q-donow::before    { background: linear-gradient(180deg, var(--donow-from),    var(--donow-to));    }
+.q-delete::before   { background: linear-gradient(180deg, var(--delete-from),   var(--delete-to));   }
+.q-schedule::before { background: linear-gradient(180deg, var(--schedule-from), var(--schedule-to)); }
 
-.q-delegate::before { background: linear-gradient(90deg, var(--delegate-from), var(--delegate-to)); }
-.q-donow::before    { background: linear-gradient(90deg, var(--donow-from),    var(--donow-to));    }
-.q-delete::before   { background: linear-gradient(90deg, var(--delete-from),   var(--delete-to));   }
-.q-schedule::before { background: linear-gradient(90deg, var(--schedule-from), var(--schedule-to)); }
+/* Coloured quadrant title */
+.q-delegate .quadrant-title { color: #fbbf24; }
+.q-donow    .quadrant-title { color: #f87171; }
+.q-delete   .quadrant-title { color: #9ca3af; }
+.q-schedule .quadrant-title { color: #818cf8; }
 
 /* Drag-over highlight */
 .quadrant.drag-over {
-  border-color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.40);
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15), var(--shadow);
-  background: var(--surface-hover);
+  filter: brightness(1.10);
 }
 
 /* ── Quadrant header ── */
@@ -347,6 +370,17 @@ body {
   animation: taskIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+/* Per-quadrant task card tint */
+.q-delegate .task-card { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.25); }
+.q-donow    .task-card { background: rgba(239,68,68,0.12);  border-color: rgba(239,68,68,0.25);  }
+.q-delete   .task-card { background: rgba(107,114,128,0.12);border-color: rgba(107,114,128,0.22);}
+.q-schedule .task-card { background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25); }
+
+.q-delegate .task-card:hover { background: rgba(245,158,11,0.22); box-shadow: 0 6px 20px rgba(245,158,11,0.20); transform: translateY(-2px); }
+.q-donow    .task-card:hover { background: rgba(239,68,68,0.22);  box-shadow: 0 6px 20px rgba(239,68,68,0.20);  transform: translateY(-2px); }
+.q-delete   .task-card:hover { background: rgba(107,114,128,0.22);box-shadow: 0 6px 20px rgba(107,114,128,0.18);transform: translateY(-2px); }
+.q-schedule .task-card:hover { background: rgba(99,102,241,0.22); box-shadow: 0 6px 20px rgba(99,102,241,0.22); transform: translateY(-2px); }
+
 /* Entrance animation */
 @keyframes taskIn {
   from { opacity: 0; transform: translateY(10px) scale(0.96); }
@@ -358,8 +392,6 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0,0,0,0.30);
 }
-
-/* While dragging */
 .task-card.dragging {
   opacity: 0.45;
   cursor: grabbing;
@@ -433,6 +465,17 @@ body {
   background: rgba(255,255,255,0.04);
   transform: translateY(-1px);
 }
+
+/* Per-quadrant coloured Add Task buttons */
+.q-delegate .btn-add { border-color: rgba(245,158,11,0.45); color: #fbbf24; }
+.q-donow    .btn-add { border-color: rgba(239,68,68,0.45);  color: #f87171; }
+.q-delete   .btn-add { border-color: rgba(107,114,128,0.45);color: #9ca3af; }
+.q-schedule .btn-add { border-color: rgba(99,102,241,0.45); color: #818cf8; }
+
+.q-delegate .btn-add:hover { border-color: rgba(245,158,11,0.85); background: rgba(245,158,11,0.12); color: #fcd34d; transform: translateY(-1px); }
+.q-donow    .btn-add:hover { border-color: rgba(239,68,68,0.85);  background: rgba(239,68,68,0.12);  color: #fca5a5; transform: translateY(-1px); }
+.q-delete   .btn-add:hover { border-color: rgba(107,114,128,0.85);background: rgba(107,114,128,0.12);color: #d1d5db; transform: translateY(-1px); }
+.q-schedule .btn-add:hover { border-color: rgba(99,102,241,0.85); background: rgba(99,102,241,0.12); color: #a5b4fc; transform: translateY(-1px); }
 
 /* ============================================================
    MODAL
