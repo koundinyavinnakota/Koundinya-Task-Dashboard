@@ -8,10 +8,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Run whenever code is pushed to main
+  # Run whenever code is pushed to master
   push:
     branches:
-      - main
+      - master
 
   # Allow manual trigger from the Actions tab
   workflow_dispatch:
