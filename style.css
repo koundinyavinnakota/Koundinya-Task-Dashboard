@@ -246,48 +246,54 @@ body {
   overflow: hidden;
 }
 
-/* ── Per-quadrant tinted background ── */
+/* ── Per-quadrant SOLID coloured backgrounds ── */
 .q-delegate {
-  background: linear-gradient(145deg, rgba(245,158,11,0.18) 0%, rgba(217,119,6,0.10) 100%);
-  border-color: rgba(245,158,11,0.30);
+  background: linear-gradient(160deg, #3d2a00 0%, #2d1f00 60%, #1e1500 100%);
+  border-color: rgba(245,158,11,0.55);
+  box-shadow: 0 8px 32px rgba(245,158,11,0.18), var(--shadow);
 }
 .q-donow {
-  background: linear-gradient(145deg, rgba(239,68,68,0.20) 0%, rgba(249,115,22,0.12) 100%);
-  border-color: rgba(239,68,68,0.30);
+  background: linear-gradient(160deg, #3d0a0a 0%, #2d0606 60%, #1e0404 100%);
+  border-color: rgba(239,68,68,0.55);
+  box-shadow: 0 8px 32px rgba(239,68,68,0.18), var(--shadow);
 }
 .q-delete {
-  background: linear-gradient(145deg, rgba(107,114,128,0.20) 0%, rgba(55,65,81,0.12) 100%);
-  border-color: rgba(107,114,128,0.25);
+  background: linear-gradient(160deg, #1c1f24 0%, #141619 60%, #0e0f11 100%);
+  border-color: rgba(107,114,128,0.45);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35), var(--shadow);
 }
 .q-schedule {
-  background: linear-gradient(145deg, rgba(99,102,241,0.20) 0%, rgba(59,130,246,0.12) 100%);
-  border-color: rgba(99,102,241,0.30);
+  background: linear-gradient(160deg, #1a1040 0%, #130c30 60%, #0d0820 100%);
+  border-color: rgba(99,102,241,0.55);
+  box-shadow: 0 8px 32px rgba(99,102,241,0.18), var(--shadow);
 }
 
-/* Thick coloured left border instead of top strip */
-.quadrant::before {
+/* Remove the ::before pseudo element — no longer needed */
+.quadrant::before { display: none; }
+
+/* Coloured top border stripe */
+.quadrant::after {
   content: '';
   position: absolute;
-  inset: 0 auto 0 0;
-  width: 4px;
-  border-radius: var(--radius) 0 0 var(--radius);
+  inset: 0 0 auto 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
 }
-.q-delegate::before { background: linear-gradient(180deg, var(--delegate-from), var(--delegate-to)); }
-.q-donow::before    { background: linear-gradient(180deg, var(--donow-from),    var(--donow-to));    }
-.q-delete::before   { background: linear-gradient(180deg, var(--delete-from),   var(--delete-to));   }
-.q-schedule::before { background: linear-gradient(180deg, var(--schedule-from), var(--schedule-to)); }
+.q-delegate::after { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.q-donow::after    { background: linear-gradient(90deg, #ef4444, #f97316); }
+.q-delete::after   { background: linear-gradient(90deg, #6b7280, #9ca3af); }
+.q-schedule::after { background: linear-gradient(90deg, #6366f1, #3b82f6); }
 
-/* Coloured quadrant title */
-.q-delegate .quadrant-title { color: #fbbf24; }
-.q-donow    .quadrant-title { color: #f87171; }
-.q-delete   .quadrant-title { color: #9ca3af; }
-.q-schedule .quadrant-title { color: #818cf8; }
+/* Coloured quadrant titles */
+.q-delegate .quadrant-title { color: #fbbf24; text-shadow: 0 0 20px rgba(245,158,11,0.40); }
+.q-donow    .quadrant-title { color: #f87171; text-shadow: 0 0 20px rgba(239,68,68,0.40);  }
+.q-delete   .quadrant-title { color: #d1d5db; text-shadow: none; }
+.q-schedule .quadrant-title { color: #a5b4fc; text-shadow: 0 0 20px rgba(99,102,241,0.40); }
 
-/* Drag-over highlight */
+/* Drag-over highlight — brighten the whole box */
 .quadrant.drag-over {
-  border-color: rgba(255, 255, 255, 0.40);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15), var(--shadow);
-  filter: brightness(1.10);
+  filter: brightness(1.25);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.30), 0 12px 48px rgba(255,255,255,0.08);
 }
 
 /* ── Quadrant header ── */
@@ -370,16 +376,33 @@ body {
   animation: taskIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-/* Per-quadrant task card tint */
-.q-delegate .task-card { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.25); }
-.q-donow    .task-card { background: rgba(239,68,68,0.12);  border-color: rgba(239,68,68,0.25);  }
-.q-delete   .task-card { background: rgba(107,114,128,0.12);border-color: rgba(107,114,128,0.22);}
-.q-schedule .task-card { background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25); }
+/* Per-quadrant task card — strong vivid highlight */
+.q-delegate .task-card {
+  background: rgba(245,158,11,0.22);
+  border-color: rgba(245,158,11,0.50);
+  box-shadow: 0 2px 12px rgba(245,158,11,0.15);
+}
+.q-donow .task-card {
+  background: rgba(239,68,68,0.22);
+  border-color: rgba(239,68,68,0.50);
+  box-shadow: 0 2px 12px rgba(239,68,68,0.15);
+}
+.q-delete .task-card {
+  background: rgba(107,114,128,0.20);
+  border-color: rgba(107,114,128,0.40);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.20);
+}
+.q-schedule .task-card {
+  background: rgba(99,102,241,0.22);
+  border-color: rgba(99,102,241,0.50);
+  box-shadow: 0 2px 12px rgba(99,102,241,0.15);
+}
 
-.q-delegate .task-card:hover { background: rgba(245,158,11,0.22); box-shadow: 0 6px 20px rgba(245,158,11,0.20); transform: translateY(-2px); }
-.q-donow    .task-card:hover { background: rgba(239,68,68,0.22);  box-shadow: 0 6px 20px rgba(239,68,68,0.20);  transform: translateY(-2px); }
-.q-delete   .task-card:hover { background: rgba(107,114,128,0.22);box-shadow: 0 6px 20px rgba(107,114,128,0.18);transform: translateY(-2px); }
-.q-schedule .task-card:hover { background: rgba(99,102,241,0.22); box-shadow: 0 6px 20px rgba(99,102,241,0.22); transform: translateY(-2px); }
+/* Hover — glow up strongly */
+.q-delegate .task-card:hover { background: rgba(245,158,11,0.38); border-color: rgba(245,158,11,0.80); box-shadow: 0 6px 24px rgba(245,158,11,0.35); transform: translateY(-3px); }
+.q-donow    .task-card:hover { background: rgba(239,68,68,0.38);  border-color: rgba(239,68,68,0.80);  box-shadow: 0 6px 24px rgba(239,68,68,0.35);  transform: translateY(-3px); }
+.q-delete   .task-card:hover { background: rgba(107,114,128,0.35);border-color: rgba(107,114,128,0.70);box-shadow: 0 6px 24px rgba(107,114,128,0.25);transform: translateY(-3px); }
+.q-schedule .task-card:hover { background: rgba(99,102,241,0.38); border-color: rgba(99,102,241,0.80); box-shadow: 0 6px 24px rgba(99,102,241,0.35); transform: translateY(-3px); }
 
 /* Entrance animation */
 @keyframes taskIn {
