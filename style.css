@@ -246,54 +246,54 @@ body {
   overflow: hidden;
 }
 
-/* ── Per-quadrant SOLID coloured backgrounds ── */
+/* ── Per-quadrant VIVID coloured backgrounds ── */
 .q-delegate {
-  background: linear-gradient(160deg, #3d2a00 0%, #2d1f00 60%, #1e1500 100%);
-  border-color: rgba(245,158,11,0.55);
-  box-shadow: 0 8px 32px rgba(245,158,11,0.18), var(--shadow);
+  background: linear-gradient(160deg, #78450a 0%, #5a3208 60%, #3d2005 100%);
+  border: 2px solid rgba(245,158,11,0.70);
+  box-shadow: 0 8px 40px rgba(245,158,11,0.30), var(--shadow);
 }
 .q-donow {
-  background: linear-gradient(160deg, #3d0a0a 0%, #2d0606 60%, #1e0404 100%);
-  border-color: rgba(239,68,68,0.55);
-  box-shadow: 0 8px 32px rgba(239,68,68,0.18), var(--shadow);
+  background: linear-gradient(160deg, #7a1010 0%, #5c0c0c 60%, #3d0808 100%);
+  border: 2px solid rgba(239,68,68,0.70);
+  box-shadow: 0 8px 40px rgba(239,68,68,0.30), var(--shadow);
 }
 .q-delete {
-  background: linear-gradient(160deg, #1c1f24 0%, #141619 60%, #0e0f11 100%);
-  border-color: rgba(107,114,128,0.45);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.35), var(--shadow);
+  background: linear-gradient(160deg, #2e3340 0%, #222730 60%, #171a20 100%);
+  border: 2px solid rgba(107,114,128,0.55);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.45), var(--shadow);
 }
 .q-schedule {
-  background: linear-gradient(160deg, #1a1040 0%, #130c30 60%, #0d0820 100%);
-  border-color: rgba(99,102,241,0.55);
-  box-shadow: 0 8px 32px rgba(99,102,241,0.18), var(--shadow);
+  background: linear-gradient(160deg, #251a6e 0%, #1b1252 60%, #120c38 100%);
+  border: 2px solid rgba(99,102,241,0.70);
+  box-shadow: 0 8px 40px rgba(99,102,241,0.30), var(--shadow);
 }
 
 /* Remove the ::before pseudo element — no longer needed */
 .quadrant::before { display: none; }
 
-/* Coloured top border stripe */
+/* Coloured top border stripe — thicker and brighter */
 .quadrant::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
-  height: 3px;
+  height: 5px;
   border-radius: var(--radius) var(--radius) 0 0;
 }
-.q-delegate::after { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-.q-donow::after    { background: linear-gradient(90deg, #ef4444, #f97316); }
-.q-delete::after   { background: linear-gradient(90deg, #6b7280, #9ca3af); }
-.q-schedule::after { background: linear-gradient(90deg, #6366f1, #3b82f6); }
+.q-delegate::after { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
+.q-donow::after    { background: linear-gradient(90deg, #ef4444, #fb923c); }
+.q-delete::after   { background: linear-gradient(90deg, #6b7280, #d1d5db); }
+.q-schedule::after { background: linear-gradient(90deg, #6366f1, #60a5fa); }
 
-/* Coloured quadrant titles */
-.q-delegate .quadrant-title { color: #fbbf24; text-shadow: 0 0 20px rgba(245,158,11,0.40); }
-.q-donow    .quadrant-title { color: #f87171; text-shadow: 0 0 20px rgba(239,68,68,0.40);  }
-.q-delete   .quadrant-title { color: #d1d5db; text-shadow: none; }
-.q-schedule .quadrant-title { color: #a5b4fc; text-shadow: 0 0 20px rgba(99,102,241,0.40); }
+/* Coloured quadrant titles — bright and bold */
+.q-delegate .quadrant-title { color: #fcd34d; text-shadow: 0 0 24px rgba(245,158,11,0.70); font-size: 1.2rem; }
+.q-donow    .quadrant-title { color: #fca5a5; text-shadow: 0 0 24px rgba(239,68,68,0.70);  font-size: 1.2rem; }
+.q-delete   .quadrant-title { color: #e5e7eb; text-shadow: 0 0 12px rgba(156,163,175,0.40); font-size: 1.2rem; }
+.q-schedule .quadrant-title { color: #c7d2fe; text-shadow: 0 0 24px rgba(99,102,241,0.70); font-size: 1.2rem; }
 
 /* Drag-over highlight — brighten the whole box */
 .quadrant.drag-over {
-  filter: brightness(1.25);
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.30), 0 12px 48px rgba(255,255,255,0.08);
+  filter: brightness(1.30);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.40), 0 12px 48px rgba(255,255,255,0.12);
 }
 
 /* ── Quadrant header ── */
@@ -376,33 +376,39 @@ body {
   animation: taskIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-/* Per-quadrant task card — strong vivid highlight */
+/* Per-quadrant task card — vivid coloured cards */
 .q-delegate .task-card {
-  background: rgba(245,158,11,0.22);
-  border-color: rgba(245,158,11,0.50);
-  box-shadow: 0 2px 12px rgba(245,158,11,0.15);
+  background: rgba(245,158,11,0.30);
+  border: 1px solid rgba(245,158,11,0.65);
+  box-shadow: 0 2px 16px rgba(245,158,11,0.20);
 }
 .q-donow .task-card {
-  background: rgba(239,68,68,0.22);
-  border-color: rgba(239,68,68,0.50);
-  box-shadow: 0 2px 12px rgba(239,68,68,0.15);
+  background: rgba(239,68,68,0.30);
+  border: 1px solid rgba(239,68,68,0.65);
+  box-shadow: 0 2px 16px rgba(239,68,68,0.20);
 }
 .q-delete .task-card {
-  background: rgba(107,114,128,0.20);
-  border-color: rgba(107,114,128,0.40);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.20);
+  background: rgba(107,114,128,0.28);
+  border: 1px solid rgba(156,163,175,0.55);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
 }
 .q-schedule .task-card {
-  background: rgba(99,102,241,0.22);
-  border-color: rgba(99,102,241,0.50);
-  box-shadow: 0 2px 12px rgba(99,102,241,0.15);
+  background: rgba(99,102,241,0.30);
+  border: 1px solid rgba(99,102,241,0.65);
+  box-shadow: 0 2px 16px rgba(99,102,241,0.20);
 }
 
-/* Hover — glow up strongly */
-.q-delegate .task-card:hover { background: rgba(245,158,11,0.38); border-color: rgba(245,158,11,0.80); box-shadow: 0 6px 24px rgba(245,158,11,0.35); transform: translateY(-3px); }
-.q-donow    .task-card:hover { background: rgba(239,68,68,0.38);  border-color: rgba(239,68,68,0.80);  box-shadow: 0 6px 24px rgba(239,68,68,0.35);  transform: translateY(-3px); }
-.q-delete   .task-card:hover { background: rgba(107,114,128,0.35);border-color: rgba(107,114,128,0.70);box-shadow: 0 6px 24px rgba(107,114,128,0.25);transform: translateY(-3px); }
-.q-schedule .task-card:hover { background: rgba(99,102,241,0.38); border-color: rgba(99,102,241,0.80); box-shadow: 0 6px 24px rgba(99,102,241,0.35); transform: translateY(-3px); }
+/* Task title text colour per quadrant for legibility */
+.q-delegate .task-card .task-title { color: #fef3c7; }
+.q-donow    .task-card .task-title { color: #fee2e2; }
+.q-delete   .task-card .task-title { color: #f3f4f6; }
+.q-schedule .task-card .task-title { color: #e0e7ff; }
+
+/* Hover — strong glow lift */
+.q-delegate .task-card:hover { background: rgba(245,158,11,0.50); border-color: rgba(245,158,11,0.90); box-shadow: 0 8px 28px rgba(245,158,11,0.45); transform: translateY(-3px); }
+.q-donow    .task-card:hover { background: rgba(239,68,68,0.50);  border-color: rgba(239,68,68,0.90);  box-shadow: 0 8px 28px rgba(239,68,68,0.45);  transform: translateY(-3px); }
+.q-delete   .task-card:hover { background: rgba(107,114,128,0.45);border-color: rgba(156,163,175,0.85);box-shadow: 0 8px 28px rgba(107,114,128,0.30);transform: translateY(-3px); }
+.q-schedule .task-card:hover { background: rgba(99,102,241,0.50); border-color: rgba(99,102,241,0.90); box-shadow: 0 8px 28px rgba(99,102,241,0.45); transform: translateY(-3px); }
 
 /* Entrance animation */
 @keyframes taskIn {
