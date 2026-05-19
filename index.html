@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koundinya Task Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon">⚡</span>
+        <h1 class="brand-title">Task Dashboard</h1>
+      </div>
+
+      <!-- Productivity quote rotates daily -->
+      <div class="quote-box">
+        <p class="quote-text" id="quoteText">Loading quote...</p>
+      </div>
+
+      <!-- Dark / Light mode toggle -->
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </header>
+
+  <!-- ===== EISENHOWER MATRIX GRID ===== -->
+  <!--
+    Layout (2 × 2):
+    ┌──────────────────┬──────────────────┐
+    │ NOT IMPORTANT    │ IMPORTANT        │
+    │ + URGENT         │ + URGENT         │
+    │ (Delegate)       │ (Do Now)         │
+    ├──────────────────┼──────────────────┤
+    │ NOT IMPORTANT    │ IMPORTANT        │
+    │ + NOT URGENT     │ + NOT URGENT     │
+    │ (Delete)         │ (Schedule)       │
+    └──────────────────┴──────────────────┘
+  -->
+  <main class="matrix-grid">
+
+    <!-- ── Q1 · NOT IMPORTANT + URGENT → Delegate (amber/yellow) ── -->
+    <section class="quadrant q-delegate" id="q-delegate" data-quadrant="delegate"
+             ondragover="handleDragOver(event)"
+             ondrop="handleDrop(event)"
+             ondragleave="handleDragLeave(event)">
+      <div class="quadrant-header">
+        <div class="quadrant-labels">
+          <span class="tag tag-secondary">NOT IMPORTANT</span>
+          <span class="tag tag-primary">URGENT</span>
+        </div>
+        <h2 class="quadrant-title">Delegate</h2>
+        <span class="task-count" id="count-delegate">0</span>
+      </div>
+
+      <!-- Task list renders here -->
+      <ul class="task-list" id="list-delegate"></ul>
+
+      <!-- Inline add-task form -->
+      <div class="add-task-area">
+        <button class="btn-add" onclick="openModal('delegate')">＋ Add Task</button>
+      </div>
+    </section>
+
+    <!-- ── Q2 · IMPORTANT + URGENT → Do Now (red/orange) ── -->
+    <section class="quadrant q-donow" id="q-donow" data-quadrant="donow"
+             ondragover="handleDragOver(event)"
+             ondrop="handleDrop(event)"
+             ondragleave="handleDragLeave(event)">
+      <div class="quadrant-header">
+        <div class="quadrant-labels">
+          <span class="tag tag-primary">IMPORTANT</span>
+          <span class="tag tag-primary">URGENT</span>
+        </div>
+        <h2 class="quadrant-title">Do Now</h2>
+        <span class="task-count" id="count-donow">0</span>
+      </div>
+
+      <ul class="task-list" id="list-donow"></ul>
+
+      <div class="add-task-area">
+        <button class="btn-add" onclick="openModal('donow')">＋ Add Task</button>
+      </div>
+    </section>
+
+    <!-- ── Q3 · NOT IMPORTANT + NOT URGENT → Delete (gray/dark) ── -->
+    <section class="quadrant q-delete" id="q-delete" data-quadrant="delete"
+             ondragover="handleDragOver(event)"
+             ondrop="handleDrop(event)"
+             ondragleave="handleDragLeave(event)">
+      <div class="quadrant-header">
+        <div class="quadrant-labels">
+          <span class="tag tag-secondary">NOT IMPORTANT</span>
+          <span class="tag tag-secondary">NOT URGENT</span>
+        </div>
+        <h2 class="quadrant-title">Delete</h2>
+        <span class="task-count" id="count-delete">0</span>
+      </div>
+
+      <ul class="task-list" id="list-delete"></ul>
+
+      <div class="add-task-area">
+        <button class="btn-add" onclick="openModal('delete')">＋ Add Task</button>
+      </div>
+    </section>
+
+    <!-- ── Q4 · IMPORTANT + NOT URGENT → Schedule (blue/purple) ── -->
+    <section class="quadrant q-schedule" id="q-schedule" data-quadrant="schedule"
+             ondragover="handleDragOver(event)"
+             ondrop="handleDrop(event)"
+             ondragleave="handleDragLeave(event)">
+      <div class="quadrant-header">
+        <div class="quadrant-labels">
+          <span class="tag tag-primary">IMPORTANT</span>
+          <span class="tag tag-secondary">NOT URGENT</span>
+        </div>
+        <h2 class="quadrant-title">Schedule</h2>
+        <span class="task-count" id="count-schedule">0</span>
+      </div>
+
+      <ul class="task-list" id="list-schedule"></ul>
+
+      <div class="add-task-area">
+        <button class="btn-add" onclick="openModal('schedule')">＋ Add Task</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== ADD-TASK MODAL ===== -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()">
+    <div class="modal" id="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3 class="modal-title" id="modalTitle">New Task</h3>
+
+      <label class="form-label" for="taskTitle">Task Title <span class="required">*</span></label>
+      <input class="form-input" type="text" id="taskTitle"
+             placeholder="What needs to be done?" maxlength="120"
+             onkeydown="if(event.key==='Enter') saveTask()" />
+
+      <label class="form-label" for="taskNotes">Notes <span class="optional">(optional)</span></label>
+      <textarea class="form-textarea" id="taskNotes"
+                placeholder="Any extra details…" rows="3" maxlength="400"></textarea>
+
+      <button class="btn-save" onclick="saveTask()">Save Task</button>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="script.js"></script>
+</body>
+</html>
